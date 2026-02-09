@@ -6,6 +6,38 @@ const todoList = document.getElementById("todolist");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const nama = namaInput.value.trim();
+    const deskripsi = deskripsiInput.value.trim();
+    const tanggal = tanggalInput.value;
+
+    if (nama === "" || deskripsi === "" || tanggal === "") {
+        alert("Semua field wajib diisi!");
+        return;
+    }
+
+    const todoBaru = {
+        nama,
+        deskripsi,
+        tanggal,
+        selesai: false
+    };
+
+    if (indexEdit !== null) {
+        todos[indexEdit] = todoBaru;
+        indexEdit = null;
+    } else {
+        todos.push(todoBaru);
+    }
+    
+    localStorage.setItem("todos", JSON.stringify(todos));
+
+    form.reset();
+    tampilkanTodo();
+});
+
 function tampilkanTodo() {
     todoList.innerHTML = "";
 
@@ -33,37 +65,12 @@ function tampilkanTodo() {
             </div>
 
             <button onclick="hapusKegiatan(${index})">Hapus</button>
+            <button onclick="editKegiatan(${index})">Edit</button>
         `;
 
         todoList.appendChild(div);
     });
 }
-
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const nama = namaInput.value.trim();
-    const deskripsi = deskripsiInput.value.trim();
-    const tanggal = tanggalInput.value;
-
-    if (nama === "" || deskripsi === "" || tanggal === "") {
-        alert("Semua field wajib diisi!");
-        return;
-    }
-
-    const todoBaru = {
-        nama,
-        deskripsi,
-        tanggal,
-        selesai: false
-    };
-
-    todos.push(todoBaru);
-    localStorage.setItem("todos", JSON.stringify(todos));
-
-    form.reset();
-    tampilkanTodo();
-});
 
 function hapusKegiatan(index) {
     todos.splice(index, 1);
@@ -75,6 +82,18 @@ function ubahStatus(index) {
     todos[index].selesai = !todos[index].selesai;
     localStorage.setItem("todos", JSON.stringify(todos));
     tampilkanTodo();
+}
+
+let indexEdit = null;
+
+function editData(index) {
+    const data = todos [index];
+
+    namaInput = data.nama;
+    deskripsiInput = data.deskripsi;
+    tanggalInput = data.tanggal;
+
+    indexEdit = index;
 }
 
 tampilkanTodo();
