@@ -3,7 +3,7 @@ const namaInput = document.getElementById("nama");
 const deskripsiInput = document.getElementById("deskripsi");
 const tanggalInput = document.getElementById("tanggal");
 const todoList = document.getElementById("todolist");
-
+let indexEdit = null;
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 form.addEventListener("submit", function (e) {
@@ -26,12 +26,12 @@ form.addEventListener("submit", function (e) {
     };
 
     if (indexEdit !== null) {
-        todos [index] = todoBaru;
+        todos [indexEdit] = todoBaru;
         indexEdit = null;
     } else {
         todos.push (todoBaru);
     }
-    
+
     localStorage.setItem("todos", JSON.stringify(todos));
 
     form.reset();
