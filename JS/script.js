@@ -26,10 +26,10 @@ form.addEventListener("submit", function (e) {
     };
 
     if (indexEdit !== null) {
-        todos[indexEdit] = todoBaru;
+        todos [index] = todoBaru;
         indexEdit = null;
     } else {
-        todos.push(todoBaru);
+        todos.push (todoBaru);
     }
     
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -84,16 +84,14 @@ function ubahStatus(index) {
     tampilkanTodo();
 }
 
-let indexEdit = null;
-
-function editData(index) {
+function editKegiatan(index) {
     const data = todos [index];
 
-    namaInput = data.nama;
-    deskripsiInput = data.deskripsi;
-    tanggalInput = data.tanggal;
+    namaInput.value = data.nama;
+    deskripsiInput.value = data.deskripsi;
+    tanggalInput.value = data.tanggal;
 
     indexEdit = index;
 }
 
-tampilkanTodo();
+
